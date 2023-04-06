@@ -129,8 +129,14 @@ dmypy.json
 .pyre/
 
 # Config Files:
-*/config.py
+config.py
 
 #Image Files:
 *.png
 *jpg
+
+# VSCode
+.vscode/*
+
+# DataBase File:
+app.db
