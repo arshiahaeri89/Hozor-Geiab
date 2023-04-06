@@ -1,0 +1,5 @@
+import os
+
+# DataBase Configs:
+DB_PATH = os.path.join(os.path.dirname(__file__), 'app.db')
+SQLALCHEMY_DB_URI = f'sqlite:///{DB_PATH}'
