@@ -31,7 +31,6 @@ class Invite(db.Model):
     is_finished = db.Column(db.Boolean, nullable=False, default=False)
 
 
-
 @app.route('/')
 def main():
     students = Student.query.all()
@@ -55,7 +54,7 @@ def main():
     return data
 
 
-@app.route('/get_data', methods=['POST'])
+@app.route('/getdata', methods=['POST'])
 def get_student_data():
     student_code = request.form.get('student_code')
     student = Student.query.filter_by(code=student_code).first()
@@ -79,6 +78,21 @@ def get_student_data():
     }
 
     return data
+
+
+@app.route('/addstudent', methods=['POST'])
+def add_student():
+    student_code = request.form.get('student-code')
+    student_name = request.form.get('student-name')
+    student_family = request.form.get('student-family')
+    student_class_code = request.form.get('student-class-code')
+
+    student = Student(code=student_code, name=student_name,
+                      family=student_family, class_code=student_class_code)
+    db.session.add(student)
+    db.session.commit()
+
+    return {"status": 'ok'}
 
 
 if __name__ == '__main__':
