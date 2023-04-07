@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 import config
 
@@ -50,6 +50,30 @@ def main():
             "absences": absences_list, "invites": invites_list}
 
     return data
+
+@app.route('/get_data', methods=['POST'])
+def get_student_data():
+    student_code = request.form.get('student_code')
+    student = Student.query.filter_by(code=student_code).first()
+    
+    absences = Absence.query.filter_by(student_code=student_code).all()
+    absences_list = [absence.absence_date for absence in absences]
+    
+    invites = Invite.query.filter_by(student_code=student_code).all()
+    invites_list = [invite.invite_date for invite in invites]
+
+    data = {
+        "id": student.id,
+        "code": student.code,
+        "name": student.name,
+        "family": student.family,
+        "class_code": student.class_code,
+        "absences": absences_list,
+        "invites": invites_list
+    }
+
+    return data
+    
 
 
 if __name__ == '__main__':
