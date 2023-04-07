@@ -30,8 +30,6 @@ class Invite(db.Model):
     invite_date = db.Column(db.DateTime)
     is_finished = db.Column(db.Boolean, nullable=False, default=False)
 
-# with app.app_context():
-#     db.create_all()
 
 
 @app.route('/')
