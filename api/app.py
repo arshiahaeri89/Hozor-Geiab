@@ -33,66 +33,91 @@ class Invite(db.Model):
 
 @app.route('/')
 def main():
-    students = Student.query.all()
-    students_list = [{"id": student.id, "code": student.code, "name": student.name,
-                      "family": student.family, "class_code": student.class_code} for student in students]
+    try:
+        students = Student.query.all()
+        students_list = [{"id": student.id, "code": student.code, "name": student.name,
+                        "family": student.family, "class_code": student.class_code} for student in students]
 
-    absences = Absence.query.all()
-    absences_list = [{"id": absence.id, "student_code": absence.student_code,
-                      "absence_date": absence.absence_date, "is_excused": absence.is_excused} for absence in absences]
+        absences = Absence.query.all()
+        absences_list = [{"id": absence.id, "student_code": absence.student_code,
+                        "absence_date": absence.absence_date, "is_excused": absence.is_excused} for absence in absences]
 
-    invites = Invite.query.all()
-    invites_list = [{"id": invite.id, "student_code": invite.student_code,
-                     "invite_date": invite.invite_date, "is_finished": invite.is_finished} for invite in invites]
+        invites = Invite.query.all()
+        invites_list = [{"id": invite.id, "student_code": invite.student_code,
+                        "invite_date": invite.invite_date, "is_finished": invite.is_finished} for invite in invites]
 
-    data = {
-        "students": students_list,
-        "absences": absences_list,
-        "invites": invites_list
-    }
+        data = {
+            "students": students_list,
+            "absences": absences_list,
+            "invites": invites_list
+        }
 
+    except Exception as e:
+        data = {
+            "status": "error",
+            "exception": str(e)
+        }
+        
     return data
 
 
 @app.route('/getdata', methods=['POST'])
 def get_student_data():
-    student_code = request.form.get('student_code')
-    student = Student.query.filter_by(code=student_code).first()
+    try:
+        student_code = request.form.get('student_code')
+        student = Student.query.filter_by(code=student_code).first()
 
-    absences = Absence.query.filter_by(student_code=student_code).all()
-    absences_list = [{"absence_date": absence.absence_date,
-                      "is_excused": absence.is_excused} for absence in absences]
+        absences = Absence.query.filter_by(student_code=student_code).all()
+        absences_list = [{"absence_date": absence.absence_date,
+                        "is_excused": absence.is_excused} for absence in absences]
 
-    invites = Invite.query.filter_by(student_code=student_code).all()
-    invites_list = [{"invite_date": invite.invite_date,
-                     "is_finished": invite.is_finished} for invite in invites]
+        invites = Invite.query.filter_by(student_code=student_code).all()
+        invites_list = [{"invite_date": invite.invite_date,
+                        "is_finished": invite.is_finished} for invite in invites]
 
-    data = {
-        "id": student.id,
-        "code": student.code,
-        "name": student.name,
-        "family": student.family,
-        "class_code": student.class_code,
-        "absences": absences_list,
-        "invites": invites_list
-    }
+        data = {
+            "id": student.id,
+            "code": student.code,
+            "name": student.name,
+            "family": student.family,
+            "class_code": student.class_code,
+            "absences": absences_list,
+            "invites": invites_list
+        }
 
+    except Exception as e:
+        data = {
+            "status": "error",
+            "exception": str(e)
+        }
+        
     return data
 
 
 @app.route('/addstudent', methods=['POST'])
 def add_student():
-    student_code = request.form.get('student-code')
-    student_name = request.form.get('student-name')
-    student_family = request.form.get('student-family')
-    student_class_code = request.form.get('student-class-code')
+    try:
+        student_code = request.form.get('student-code')
+        student_name = request.form.get('student-name')
+        student_family = request.form.get('student-family')
+        student_class_code = request.form.get('student-class-code')
 
-    student = Student(code=student_code, name=student_name,
-                      family=student_family, class_code=student_class_code)
-    db.session.add(student)
-    db.session.commit()
+        student = Student(code=student_code, name=student_name,
+                        family=student_family, class_code=student_class_code)
+        db.session.add(student)
+        db.session.commit()
 
-    return {"status": 'ok'}
+        data = {
+            "status": 'ok'
+        }
+
+    except Exception as e:
+        data = {
+            "status": "error",
+            "exception": str(e)
+        }
+
+    return data
 
 
 if __name__ == '__main__':
