@@ -140,3 +140,6 @@ config.py
 
 # DataBase File:
 app.db
+
+# Other:
+test.txt
