@@ -21,12 +21,14 @@ class Absence(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     student_code = db.Column(db.String(10), unique=True)
     absence_date = db.Column(db.DateTime)
+    is_excused = db.Column(db.Boolean, nullable=False, default=False)
 
 
 class Invite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     student_code = db.Column(db.String(10), unique=True)
     invite_date = db.Column(db.DateTime)
+    is_finished = db.Column(db.Boolean, nullable=False, default=False)
 
 # with app.app_context():
 #     db.create_all()
@@ -40,27 +42,30 @@ def main():
 
     absences = Absence.query.all()
     absences_list = [{"id": absence.id, "student_code": absence.student_code,
-                      "absence_date": absence.absence_date} for absence in absences]
+                      "absence_date": absence.absence_date, "is_excused": absence.is_excused} for absence in absences]
 
     invites = Invite.query.all()
     invites_list = [{"id": invite.id, "student_code": invite.student_code,
-                     "invite_date": invite.invite_date} for invite in invites]
+                     "invite_date": invite.invite_date, "is_finished": invite.is_finished} for invite in invites]
 
     data = {"students": students_list,
             "absences": absences_list, "invites": invites_list}
 
     return data
 
+
 @app.route('/get_data', methods=['POST'])
 def get_student_data():
     student_code = request.form.get('student_code')
     student = Student.query.filter_by(code=student_code).first()
-    
+
     absences = Absence.query.filter_by(student_code=student_code).all()
-    absences_list = [absence.absence_date for absence in absences]
-    
+    absences_list = [{"absence_date": absence.absence_date,
+                      "is_excused": absence.is_excused} for absence in absences]
+
     invites = Invite.query.filter_by(student_code=student_code).all()
-    invites_list = [invite.invite_date for invite in invites]
+    invites_list = [{"invite_date": invite.invite_date,
+                     "is_finished": invite.is_finished} for invite in invites]
 
     data = {
         "id": student.id,
@@ -73,7 +78,6 @@ def get_student_data():
     }
 
     return data
-    
 
 
 if __name__ == '__main__':
