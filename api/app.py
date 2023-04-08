@@ -20,14 +20,14 @@ class Student(db.Model):
 
 class Absence(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    student_code = db.Column(db.String(10), unique=True)
+    student_code = db.Column(db.String(10))
     absence_date = db.Column(db.DateTime)
     is_excused = db.Column(db.Boolean, nullable=False, default=False)
 
 
 class Invite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    student_code = db.Column(db.String(10), unique=True)
+    student_code = db.Column(db.String(10))
     invite_date = db.Column(db.DateTime)
     is_finished = db.Column(db.Boolean, nullable=False, default=False)
 
@@ -65,7 +65,7 @@ def main():
 @app.route('/getdata', methods=['POST'])
 def get_student_data():
     try:
-        student_code = request.form.get('student_code')
+        student_code = request.form.get('student-code')
         student = Student.query.filter_by(code=student_code).first()
 
         absences = Absence.query.filter_by(student_code=student_code).all()
@@ -124,8 +124,8 @@ def add_student():
 @app.route('/addabsence', methods=['POST'])
 def add_absence():
     try:
-        student_code = request.form.get('student_code')
-        absence_date = request.form.get('absence_date')
+        student_code = request.form.get('student-code')
+        absence_date = request.form.get('absence-date')
 
         absence_datetime = datetime.datetime.strptime(
             absence_date, config.DATETIME_FORMAT)
@@ -139,6 +139,32 @@ def add_absence():
             "status": 'ok'
         }
 
+    except Exception as e:
+        data = {
+            "status": "error",
+            "exception": str(e)
+        }
+
+    return data
+
+
+@app.route('/addinvite', methods=['POST'])
+def add_invite():
+    try:
+        student_code = request.form.get('student-code')
+        invite_date = request.form.get('invite-date')
+
+        invite_datetime = datetime.datetime.strptime(
+            invite_date, config.DATETIME_FORMAT)
+
+        invite = Invite(student_code=student_code,
+                        invite_date=invite_datetime)
+        db.session.add(invite)
+        db.session.commit()
+
+        data = {
+            "status": 'ok'
+        }
     except Exception as e:
         data = {
             "status": "error",
