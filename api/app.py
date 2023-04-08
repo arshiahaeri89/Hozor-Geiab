@@ -1,6 +1,7 @@
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 import config
+import datetime
 
 app = Flask(__name__)
 
@@ -36,11 +37,11 @@ def main():
     try:
         students = Student.query.all()
         students_list = [{"id": student.id, "code": student.code, "name": student.name,
-                        "family": student.family, "class_code": student.class_code} for student in students]
+                          "family": student.family, "class_code": student.class_code} for student in students]
 
         absences = Absence.query.all()
         absences_list = [{"id": absence.id, "student_code": absence.student_code,
-                        "absence_date": absence.absence_date, "is_excused": absence.is_excused} for absence in absences]
+                          "absence_date": absence.absence_date, "is_excused": absence.is_excused} for absence in absences]
 
         invites = Invite.query.all()
         invites_list = [{"id": invite.id, "student_code": invite.student_code,
@@ -57,7 +58,7 @@ def main():
             "status": "error",
             "exception": str(e)
         }
-        
+
     return data
 
 
@@ -69,7 +70,7 @@ def get_student_data():
 
         absences = Absence.query.filter_by(student_code=student_code).all()
         absences_list = [{"absence_date": absence.absence_date,
-                        "is_excused": absence.is_excused} for absence in absences]
+                          "is_excused": absence.is_excused} for absence in absences]
 
         invites = Invite.query.filter_by(student_code=student_code).all()
         invites_list = [{"invite_date": invite.invite_date,
@@ -90,7 +91,7 @@ def get_student_data():
             "status": "error",
             "exception": str(e)
         }
-        
+
     return data
 
 
@@ -103,8 +104,35 @@ def add_student():
         student_class_code = request.form.get('student-class-code')
 
         student = Student(code=student_code, name=student_name,
-                        family=student_family, class_code=student_class_code)
+                          family=student_family, class_code=student_class_code)
         db.session.add(student)
+        db.session.commit()
+
+        data = {
+            "status": 'ok'
+        }
+
+    except Exception as e:
+        data = {
+            "status": "error",
+            "exception": str(e)
+        }
+
+    return data
+
+
+@app.route('/addabsence', methods=['POST'])
+def add_absence():
+    try:
+        student_code = request.form.get('student_code')
+        absence_date = request.form.get('absence_date')
+
+        absence_datetime = datetime.datetime.strptime(
+            absence_date, config.DATETIME_FORMAT)
+
+        absence = Absence(student_code=student_code,
+                          absence_date=absence_datetime)
+        db.session.add(absence)
         db.session.commit()
 
         data = {
