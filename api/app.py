@@ -69,11 +69,11 @@ def get_student_data():
         student = Student.query.filter_by(code=student_code).first()
 
         absences = Absence.query.filter_by(student_code=student_code).all()
-        absences_list = [{"absence_date": absence.absence_date,
+        absences_list = [{"absence_id": absence.id, "absence_date": absence.absence_date,
                           "is_excused": absence.is_excused} for absence in absences]
 
         invites = Invite.query.filter_by(student_code=student_code).all()
-        invites_list = [{"invite_date": invite.invite_date,
+        invites_list = [{"invite_id": invite.id, "invite_date": invite.invite_date,
                         "is_finished": invite.is_finished} for invite in invites]
 
         data = {
