@@ -8,10 +8,10 @@ This Project is a Student Management System for Attendance check and send invite
 
 ## How to run API
 1. Install python, pip, and virtualenv in your system.
-> Note: your python version most be Python3
+> Note: your python version most be python3
 2. Clone the project using `git clone https://github.com/arshiahaeri89/Hozor-Geiab.git`.
 3. In the app folder, rename the `config.py.sample` to `config.py` and do proper changes.
-4. db configs are in config.py.
+4. DB configs are in config.py.
 5. Create a virtualenv named venv using `virtualenv venv`
 6. Connect to virtualenv using `source venv/bin/activate` in GNU-Linux and MacOs and `./venv/Scripts/activate` in Windows.
 7. From the project folder, install packages using `pip install -r requirements.txt`
