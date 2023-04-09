@@ -7,8 +7,8 @@
 This Project is a Student Management System for Attendance check and send invite for parents
 
 ## How to run API
-1. Install python, pip, and virtualenv in your system.
 > Note: your python version most be python3
+1. Install python, pip, and virtualenv in your system.
 2. Clone the project using `git clone https://github.com/arshiahaeri89/Hozor-Geiab.git`.
 3. In the app folder, rename the `config.py.sample` to `config.py` and do proper changes.
 4. DB configs are in config.py.
