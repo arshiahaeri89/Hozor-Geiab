@@ -173,6 +173,25 @@ def add_invite():
 
     return data
 
+@app.route('/excuseabsence', methods=['POST'])
+def excuse_adsence():
+    try:
+        absence_id = int(request.form.get('absence-id'))
+        absence = Absence.query.get(absence_id)
+        absence.is_excused = True
+        db.session.commit()
+
+        data = {
+            "status": 'ok'
+        }
+
+    except Exception as e:
+        data = {
+            "status": "error",
+            "exception": str(e)
+        }
+
+    return data
 
 if __name__ == '__main__':
     app.run(debug=True)
