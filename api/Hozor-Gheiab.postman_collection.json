@@ -1,0 +1,258 @@
+{
+	"info": {
+		"_postman_id": "412e1da2-0550-40d0-a3a5-8a962aa55da1",
+		"name": "Hozor-Gheiab",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26782968"
+	},
+	"item": [
+		{
+			"name": "api-root",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-get-data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "student-code",
+							"value": "0154341266",
+							"type": "text"
+						},
+						{
+							"key": "student-code",
+							"value": "0152410031",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "student-code",
+							"value": "0111111111",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/getdata",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"getdata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-add-student",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "student-code",
+							"value": "0111111111",
+							"type": "text"
+						},
+						{
+							"key": "student-name",
+							"value": "محمد",
+							"type": "text"
+						},
+						{
+							"key": "student-family",
+							"value": "اکبری",
+							"type": "text"
+						},
+						{
+							"key": "student-class-code",
+							"value": "9/1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/addstudent",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"addstudent"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-add-absence",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "student-code",
+							"value": "0152410031",
+							"type": "text"
+						},
+						{
+							"key": "absence-date",
+							"value": "2023-1-5 07:00:00",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/addabsence",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"addabsence"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-add-invite",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "student-code",
+							"value": "0154341266",
+							"type": "text"
+						},
+						{
+							"key": "invite-date",
+							"value": "2023-4-17 11:00:00",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/addinvite",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"addinvite"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-excuse-absence",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "absence-id",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/excuseabsence",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"excuseabsence"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api-finish-invite",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "invite-id",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/finishinvite",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"finishinvite"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
