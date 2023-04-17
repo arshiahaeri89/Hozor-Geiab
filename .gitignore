@@ -131,10 +131,6 @@ dmypy.json
 # Config Files:
 config.py
 
-#Image Files:
-*.png
-*jpg
-
 # VSCode
 .vscode/*
 
