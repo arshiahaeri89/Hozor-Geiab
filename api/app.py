@@ -41,11 +41,12 @@ def main():
 
         absences = Absence.query.all()
         absences_list = [{"id": absence.id, "student_code": absence.student_code,
-                          "absence_date": absence.absence_date, "is_excused": absence.is_excused} for absence in absences]
+                          "absence_date": absence.absence_date, "is_excused": absence.is_excused} for absence in
+                         absences]
 
         invites = Invite.query.all()
         invites_list = [{"id": invite.id, "student_code": invite.student_code,
-                        "invite_date": invite.invite_date, "is_finished": invite.is_finished} for invite in invites]
+                         "invite_date": invite.invite_date, "is_finished": invite.is_finished} for invite in invites]
 
         data = {
             "students": students_list,
@@ -74,7 +75,7 @@ def get_student_data():
 
         invites = Invite.query.filter_by(student_code=student_code).all()
         invites_list = [{"invite_id": invite.id, "invite_date": invite.invite_date,
-                        "is_finished": invite.is_finished} for invite in invites]
+                         "is_finished": invite.is_finished} for invite in invites]
 
         data = {
             "id": student.id,
