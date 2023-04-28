@@ -32,6 +32,12 @@ class Invite(db.Model):
     is_finished = db.Column(db.Boolean, nullable=False, default=False)
 
 
+class Admin(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), nullable=False, unique=True)
+    password = db.Column(db.Text, nullable=False)
+
+
 @app.route('/')
 def main():
     try:
@@ -208,6 +214,30 @@ def finish_invite():
             "status": 'ok'
         }
 
+    except Exception as e:
+        data = {
+            "status": "error",
+            "exception": str(e)
+        }
+
+    return data
+
+
+@app.route('/login')
+def login():
+    try:
+        username = request.form.get('username')
+        password = request.form.get('password')
+        admin = Admin.query.filter_by(username=username, password=password).first()
+        if admin:
+            exists = True
+        else:
+            exists = False
+
+        data = {
+            "status": "ok",
+            "exists": exists
+        }
     except Exception as e:
         data = {
             "status": "error",
