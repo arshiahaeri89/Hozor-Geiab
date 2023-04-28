@@ -137,5 +137,8 @@ config.py
 # DataBase File:
 app.db
 
+# idea files:
+.idea/*
+
 # Other:
 test.txt
