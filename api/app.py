@@ -59,17 +59,17 @@ def main():
         students = Student.query.all()
         students_list = [{"id": student.id, "code": student.code, "name": student.name,
                           "family": student.family, "class_code": student.class_code}
-                            for student in students]
+                         for student in students]
 
         absences = Absence.query.all()
         absences_list = [{"id": absence.id, "student_code": absence.student_code,
-                          "absence_date": absence.absence_date, "is_excused": absence.is_excused} 
-                            for absence in absences]
+                          "absence_date": absence.absence_date, "is_excused": absence.is_excused}
+                         for absence in absences]
 
         invites = Invite.query.all()
         invites_list = [{"id": invite.id, "student_code": invite.student_code,
-                         "invite_date": invite.invite_date, "is_finished": invite.is_finished} 
-                            for invite in invites]
+                         "invite_date": invite.invite_date, "is_finished": invite.is_finished}
+                        for invite in invites]
 
         data = {
             "students": students_list,
@@ -264,7 +264,8 @@ def login():
     try:
         username = request.form.get('username')
         password = request.form.get('password')
-        admin = Admin.query.filter_by(username=username, password=password).first()
+        admin = Admin.query.filter_by(
+            username=username, password=password).first()
 
         data = {
             "status": "ok",
